@@ -14,8 +14,8 @@ authors = [
     { name = "Till Steinbach" }
 ]
 dependencies = [
-    "carconnectivity>=0.4a6",
-    "carconnectivity-plugin-mqtt>=0.4a8",
+    "carconnectivity>=0.4a9",
+    "carconnectivity-plugin-mqtt>=0.4a9",
     "requests~=2.32.3"
 ]
 readme = "README.md"
