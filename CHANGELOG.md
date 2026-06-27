@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- No unreleased changes so far
+### Added
+- Publish a Home Assistant binary_sensor for the vehicle's `parking_brake`
 
 ## [0.6.5] - 2026-04-24
 ### Changed
