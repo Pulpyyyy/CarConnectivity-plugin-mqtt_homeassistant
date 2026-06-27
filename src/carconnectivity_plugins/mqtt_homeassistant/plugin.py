@@ -298,6 +298,16 @@ class Plugin(BasePlugin):  # pylint: disable=too-many-instance-attributes
             }
             if vehicle.state.value_type is not None and issubclass(vehicle.state.value_type, Enum):
                 discovery_message['cmps'][f'{vin}_state']['options'] = [item.value for item in vehicle.state.value_type]
+        if vehicle.parking_brake.enabled and vehicle.parking_brake.value is not None:
+            discovery_message['cmps'][f'{vin}_parking_brake'] = {
+                'p': 'binary_sensor',
+                'name': 'Parking Brake',
+                'icon': 'mdi:car-brake-parking',
+                'state_topic': f'{self.mqtt_plugin.mqtt_client.prefix}{vehicle.parking_brake.get_absolute_path()}',
+                'payload_on': 'True',
+                'payload_off': 'False',
+                'unique_id': f'{vin}_parking_brake'
+            }
         if vehicle.connection_state.enabled and vehicle.connection_state.value is not None:
             discovery_message['cmps'][f'{vin}_connection_state'] = {
                 'p': 'sensor',
