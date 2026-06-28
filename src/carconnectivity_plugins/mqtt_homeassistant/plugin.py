@@ -11,7 +11,7 @@ from carconnectivity.vehicle import GenericVehicle, ElectricVehicle
 from carconnectivity.drive import ElectricDrive, CombustionDrive, DieselDrive
 from carconnectivity.observable import Observable
 from carconnectivity.errors import ConfigurationError
-from carconnectivity.attributes import FloatAttribute, EnumAttribute, GenericAttribute
+from carconnectivity.attributes import DateAttribute, FloatAttribute, EnumAttribute, GenericAttribute
 from carconnectivity.position import Position
 from carconnectivity.charging import Charging
 from carconnectivity.doors import Doors
@@ -262,6 +262,20 @@ class Plugin(BasePlugin):  # pylint: disable=too-many-instance-attributes
             discovery_message['device']['hw'] = str(vehicle.model_year.value)
         if vehicle.software is not None and vehicle.software.enabled and vehicle.software.version.enabled and vehicle.software.version.value is not None:
             discovery_message['device']['sw'] = vehicle.software.version.value
+
+        # Per-vehicle data freshness: the vw_eu_data_act connector attaches a custom
+        # `captured_at` DateAttribute (when the dataset was actually captured). Absent
+        # on other connectors' vehicles, hence the guard. Exposed as a timestamp entity.
+        captured_at = getattr(vehicle, 'captured_at', None)
+        if isinstance(captured_at, DateAttribute) and captured_at.enabled and captured_at.value is not None:
+            discovery_message['cmps'][f'{vin}_captured_at'] = {
+                'p': 'sensor',
+                'device_class': 'timestamp',
+                'icon': 'mdi:clock-check',
+                'name': 'Data Captured',
+                'state_topic': f'{self.mqtt_plugin.mqtt_client.prefix}{captured_at.get_absolute_path()}',
+                'unique_id': f'{vin}_captured_at'
+            }
 
         if vehicle.commands.enabled and 'wake-sleep' in vehicle.commands.commands:
             discovery_message['cmps'][f'{vin}_wake'] = {
