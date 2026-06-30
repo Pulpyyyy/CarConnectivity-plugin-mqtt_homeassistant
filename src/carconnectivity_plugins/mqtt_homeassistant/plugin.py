@@ -319,20 +319,6 @@ class Plugin(BasePlugin):  # pylint: disable=too-many-instance-attributes
             }
             if vehicle.connection_state.value_type is not None and issubclass(vehicle.connection_state.value_type, Enum):
                 discovery_message['cmps'][f'{vin}_connection_state']['options'] = [item.value for item in vehicle.connection_state.value_type]
-        # captured_at is an optional connector-provided freshness timestamp (e.g. the
-        # vw_eu_data_act dataset capture time). It is not a standard GenericVehicle
-        # attribute, so guard with getattr/isinstance: vehicles from connectors that
-        # do not expose it are simply skipped (no regression).
-        captured_at = getattr(vehicle, 'captured_at', None)
-        if isinstance(captured_at, DateAttribute) and captured_at.enabled and captured_at.value is not None:
-            discovery_message['cmps'][f'{vin}_captured_at'] = {
-                'p': 'sensor',
-                'device_class': 'timestamp',
-                'icon': 'mdi:clock-check-outline',
-                'name': 'Data Captured At',
-                'state_topic': f'{self.mqtt_plugin.mqtt_client.prefix}{captured_at.get_absolute_path()}',
-                'unique_id': f'{vin}_captured_at',
-            }
         if vehicle.drives is not None and vehicle.drives.enabled:  # pylint: disable=too-many-nested-blocks
             if vehicle.drives.total_range.enabled and vehicle.drives.total_range.value is not None:
                 discovery_message['cmps'][f'{vin}_total_range'] = {
