@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-### Added
-- Publish a Home Assistant enum sensor for the charging `charge_mode`
-- Publish vehicle-level DateAttributes (e.g. `captured_at`) as timestamp sensors
-
-### Fixed
-- Remove invalid `payload_on`/`payload_off` keys from enum sensors
 
 ## [0.6.6] - 2026-07-05
 ### Added
