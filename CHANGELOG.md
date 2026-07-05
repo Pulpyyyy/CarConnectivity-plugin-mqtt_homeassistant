@@ -4,8 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
-- Publish Home Assistant discovery for the combustion drive's `oil_level` (engine oil level)
+- Publish a Home Assistant enum sensor for the charging `charge_mode`
+- Publish vehicle-level DateAttributes (e.g. `captured_at`) as timestamp sensors
+
+### Fixed
+- Remove invalid `payload_on`/`payload_off` keys from enum sensors
+
+## [0.6.6] - 2026-07-05
+### Added
 - Publish a Home Assistant binary_sensor for the vehicle's `parking_brake`
+- Publish Home Assistant discovery for the combustion drive's `oil_level` (engine oil level)
+
+### Changed
+- Updated dependency `carconnectivity-plugin-mqtt` to `>=0.10.5`
 
 ## [0.6.5] - 2026-04-24
 ### Changed
@@ -78,7 +89,8 @@ Initial release, let's go and give this to the public to try out...
 Most attributes are provided as entities in Auto discovery mode.
 Support for MQTT Lock ans MQTT HAVC is provided.
 
-[unreleased]: https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt_homeassistant/compare/v0.6.5...HEAD
+[unreleased]: https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt_homeassistant/compare/v0.6.6...HEAD
+[0.6.6]: https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt_homeassistant/releases/tag/v0.6.6
 [0.6.5]: https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt_homeassistant/releases/tag/v0.6.5
 [0.6.4]: https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt_homeassistant/releases/tag/v0.6.4
 [0.6.3]: https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt_homeassistant/releases/tag/v0.6.3
